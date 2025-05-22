@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Configuración de Seguridad Volkswagen</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+<style>
+  /* RESET */
+  * {
+    margin: 0; padding: 0; box-sizing: border-box;
+  }
+  body {
+    background: #000000;
+    color: #e0e6f3;
+    font-family: 'Poppins', sans-serif;
+    min-height: 100vh;
+    padding: 40px 20px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  h1 {
+    font-weight: 700;
+    font-size: 3rem;
+    color: #00aaff;
+    text-align: center;
+    margin-bottom: 50px;
+    text-shadow:
+      0 0 5px #00aaff88,
+      0 0 15px #00aaffaa,
+      0 0 30px #00aaffdd;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    background: #111111;
+    border-radius: 16px;
+    box-shadow:
+      0 0 40px #00aaff44,
+      inset 0 0 40px #002a4e88;
+    padding: 40px 50px;
+    backdrop-filter: saturate(180%) blur(10px);
+  }
+  .section {
+    margin-bottom: 50px;
+  }
+  .section h2 {
+    font-size: 2rem;
+    color: #00aaff;
+    border-bottom: 2px solid #004973;
+    padding-bottom: 8px;
+    margin-bottom: 30px;
+    text-shadow:
+      0 0 6px #00aaffcc;
+  }
+
+  /* TOGGLE SWITCH */
+  .toggle {
+    position: relative;
+    display: inline-block;
+    width: 52px;
+    height: 28px;
+  }
+  .toggle input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(145deg, #222, #111);
+    border-radius: 34px;
+    box-shadow:
+      inset 3px 3px 8px #000000cc,
+      inset -3px -3px 6px #333333cc,
+      0 0 12px #00aaff55;
+    transition: 0.4s;
+  }
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 22px;
+    width: 22px;
+    left: 3px;
+    bottom: 3px;
+    background: linear-gradient(145deg, #00aaff, #005f9e);
+    border-radius: 50%;
+    box-shadow:
+      0 4px 6px #004a7c,
+      0 -2px 6px #66c2ff,
+      0 0 8px #00aaffcc;
+    transition: 0.4s;
+  }
+  input:checked + .slider {
+    background: #004973;
+    box-shadow:
+      0 0 18px #00aaffcc,
+      inset 0 0 10px #007fcccc;
+  }
+  input:checked + .slider:before {
+    transform: translateX(24px);
+    background: linear-gradient(145deg, #33ccff, #007acc);
+    box-shadow:
+      0 6px 10px #007acc,
+      0 -3px 8px #a0e1ff,
+      0 0 15px #33ccffcc;
+  }
+
+  label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 600;
+    font-size: 1.15rem;
+    padding: 14px 0;
+    user-select: none;
+    cursor: pointer;
+  }
+
+  /* INPUTS */
+  input[type="password"] {
+    width: 100%;
+    background: #111111;
+    border: none;
+    border-radius: 12px;
+    padding: 14px 18px;
+    font-size: 1rem;
+    color: #c0d4f7;
+    box-shadow:
+      inset 4px 4px 8px #000000cc,
+      inset -4px -4px 8px #222222cc;
+    transition: box-shadow 0.3s ease;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+  }
+  input[type="password"]::placeholder {
+    color: #466d9caa;
+    font-weight: 400;
+  }
+  input[type="password"]:focus {
+    outline: none;
+    box-shadow:
+      0 0 12px #00aaffcc,
+      inset 0 0 16px #0099ffcc;
+  }
+
+  /* BOTÓN */
+  .btn-primary {
+    margin-top: 24px;
+    width: 100%;
+    background: linear-gradient(135deg, #0099ff, #005f9e);
+    border: none;
+    border-radius: 16px;
+    padding: 18px;
+    color: #e0e6f3;
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    text-transform: uppercase;
+    box-shadow:
+      0 0 20px #0099ffcc,
+      0 4px 10px #004a7c;
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+  }
+  .btn-primary:hover {
+    background: linear-gradient(135deg, #33ccff, #007acc);
+    box-shadow:
+      0 0 28px #33ccffdd,
+      0 6px 18px #007acc;
+  }
+
+  /* INFO TEXTO */
+  .info {
+    font-size: 0.9rem;
+    color: #5599ddaa;
+    margin-top: 10px;
+    margin-bottom: 28px;
+    text-align: center;
+    font-weight: 500;
+  }
+
+  /* Responsive */
+  @media (max-width: 480px) {
+    .container {
+      padding: 30px 20px;
+    }
+    h1 {
+      font-size: 2.3rem;
+    }
+    label {
+      font-size: 1rem;
+    }
+  }
+</style>
+</head>
+<body>
+
+  <h1>Configuración de Seguridad Volkswagen</h1>
+
+  <div class="container">
+
+    <section class="section" aria-label="Opciones de seguridad">
+      <h2>Opciones de seguridad</h2>
+
+      <label for="2fa-toggle">
+        Habilitar Autenticación en dos pasos (2FA)
+        <div class="toggle" aria-hidden="true">
+          <input type="checkbox" id="2fa-toggle" />
+          <span class="slider"></span>
+        </div>
+      </label>
+
+      <label for="login-alerts-toggle">
+        Recibir alertas de inicio de sesión
+        <div class="toggle" aria-hidden="true">
+          <input type="checkbox" id="login-alerts-toggle" checked />
+          <span class="slider"></span>
+        </div>
+      </label>
+
+      <label for="location-tracking-toggle">
+        Activar seguimiento de ubicaciones inusuales
+        <div class="toggle" aria-hidden="true">
+          <input type="checkbox" id="location-tracking-toggle" />
+          <span class="slider"></span>
+        </div>
+      </label>
+
+      <p class="info" role="note">Activa estas opciones para proteger mejor tu cuenta contra accesos no autorizados.</p>
+    </section>
+
+    <section class="section" aria-label="Cambiar contraseña">
+      <h2>Cambiar contraseña</h2>
+
+      <form onsubmit="event.preventDefault(); alert('¡Contraseña cambiada con éxito!');" aria-describedby="password-note">
+        <input
+          type="password"
+          placeholder="Contraseña actual"
+          required
+          minlength="6"
+          autocomplete="current-password"
+          aria-label="Contraseña actual"
+        />
+        <br /><br />
+        <input
+          type="password"
+          placeholder="Nueva contraseña"
+          required
+          minlength="6"
+          autocomplete="new-password"
+          aria-label="Nueva contraseña"
+        />
+        <br /><br />
+        <input
+          type="password"
+          placeholder="Confirmar nueva contraseña"
+          required
+          minlength="6"
+          autocomplete="new-password"
+          aria-label="Confirmar nueva contraseña"
+        />
+        <button class="btn-primary" type="submit">Actualizar contraseña</button>
+      </form>
+      <p id="password-note" class="info">Asegúrate de que tu nueva contraseña tenga al menos 6 caracteres.</p>
+    </section>
+
+  </div>
+
+</body>
+</html>

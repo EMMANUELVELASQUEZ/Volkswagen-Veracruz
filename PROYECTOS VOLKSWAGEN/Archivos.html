@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Archivos Volkswagen Profesionales</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+  body {
+    margin:0; padding:0;
+    background: #0b0d11;
+    color: #e0e6f0;
+    font-family: 'Poppins', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  header {
+    background: #12161d;
+    padding: 20px 30px;
+    font-size: 2.25rem;
+    font-weight: 700;
+    color: #00aaff;
+    text-shadow:
+      0 0 6px #00aaffaa,
+      0 0 15px #00aaffcc;
+    user-select: none;
+    box-shadow: inset 0 -2px 6px #0077cc88;
+  }
+  main {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 25px 30px;
+  }
+  .file-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill,minmax(240px,1fr));
+    gap: 18px;
+  }
+  .file-item {
+    background: #171b22;
+    border-radius: 15px;
+    padding: 20px 18px;
+    box-shadow:
+      7px 7px 15px #0a0c10,
+      -7px -7px 15px #202833;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    cursor: default;
+    transition: box-shadow 0.4s cubic-bezier(.4,0,.2,1);
+  }
+  .file-item:hover {
+    box-shadow:
+      0 0 15px #00aaffdd,
+      inset 0 0 20px #007acccc,
+      0 0 30px #33ccffcc;
+  }
+  .file-icon {
+    flex-shrink: 0;
+    width: 52px;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    box-shadow:
+      3px 3px 8px #0a0c1088,
+      inset 0 0 10px #00aaffaa;
+    background: #12161d;
+  }
+  .file-name {
+    font-weight: 600;
+    color: #a9b6d9;
+    font-size: 1rem;
+    word-break: break-word;
+    user-select: text;
+  }
+  /* Scrollbar */
+  main::-webkit-scrollbar {
+    width: 9px;
+  }
+  main::-webkit-scrollbar-track {
+    background: #0b0d11;
+  }
+  main::-webkit-scrollbar-thumb {
+    background: #007acccc;
+    border-radius: 5px;
+  }
+  /* Tooltip with file extension on hover */
+  .file-item:hover .file-name::after {
+    content: attr(data-ext);
+    font-weight: 400;
+    font-size: 0.85rem;
+    color: #00aaffcc;
+    margin-left: 8px;
+  }
+</style>
+</head>
+<body>
+<header>Archivos Volkswagen</header>
+<main>
+  <div class="file-list" id="file-list"></div>
+</main>
+
+<script>
+  const fileList = document.getElementById('file-list');
+
+  // SVG logos inline (for crisp icons)
+  const icons = {
+    excel: `<svg fill="#217346" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="36" height="36">
+      <path d="M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2Zm-9.15 12.43L8.5 13.5l-1.35 2.95H5.75L7.25 12l-1.5-4.46h1.35L8.5 11.5l1.35-2.95h1.35L9.25 12l1.7 3.43Z"/>
+    </svg>`,
+    word: `<svg fill="#2a4b8d" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="36" height="36">
+      <path d="M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2Zm-9.5 12h-1v-6h1v6Zm4.5 0h-1l-1.8-3-1.8 3h-1v-6h1l1.8 3 1.8-3h1v6Z"/>
+    </svg>`,
+    pdf: `<svg fill="#b8323e" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="36" height="36">
+      <path d="M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2Zm-4 11h-2v2h-2v-6h4v2h-2v2h2v2Z"/>
+    </svg>`,
+    img: `<svg fill="#9a6a1a" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="36" height="36">
+      <path d="M21 5v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2Zm-11 4a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm8 6-3.5-4.5-2.5 3.5h7Z"/>
+    </svg>`,
+  };
+
+  const fileTypes = [
+    {ext: 'xlsx', icon: icons.excel},
+    {ext: 'xls', icon: icons.excel},
+    {ext: 'docx', icon: icons.word},
+    {ext: 'doc', icon: icons.word},
+    {ext: 'pdf', icon: icons.pdf},
+    {ext: 'jpg', icon: icons.img},
+    {ext: 'png', icon: icons.img},
+  ];
+
+  function getRandomFileName(type) {
+    const words = [
+      'Volkswagen', 'Reporte', 'Finanzas', 'Ventas', 'Producción', 'Calidad', 'Proyecto', 'Resumen',
+      'Datos', 'Análisis', 'Informe', 'Presupuesto', 'Costos', 'Inventario', 'Estrategia', 'Plan',
+      'Automóvil', 'Mecánica', 'Logística', 'Mercadotecnia', 'Clientes', 'Suministros', 'Taller',
+      'Control', 'Calibración', 'Evaluación', 'Certificación', 'Desarrollo', 'Crecimiento', 'Equipo'
+    ];
+    const w1 = words[Math.floor(Math.random() * words.length)];
+    const w2 = words[Math.floor(Math.random() * words.length)];
+    const n = Math.floor(Math.random() * 900 + 100);
+    return `${w1}_${w2}_${n}.${type.ext}`;
+  }
+
+  function createFileElement(file) {
+    const div = document.createElement('div');
+    div.className = 'file-item';
+    div.title = file.name;
+
+    const iconDiv = document.createElement('div');
+    iconDiv.className = 'file-icon';
+    iconDiv.innerHTML = file.icon;
+
+    const nameDiv = document.createElement('div');
+    nameDiv.className = 'file-name';
+    nameDiv.textContent = file.name;
+    nameDiv.setAttribute('data-ext', `.${file.ext}`);
+
+    div.appendChild(iconDiv);
+    div.appendChild(nameDiv);
+    return div;
+  }
+
+  for(let i=0; i<520; i++) {
+    const type = fileTypes[i % fileTypes.length];
+    const fileName = getRandomFileName(type);
+    const fileElem = createFileElement({name: fileName, icon: type.icon, ext: type.ext});
+    fileList.appendChild(fileElem);
+  }
+</script>
+</body>
+</html>

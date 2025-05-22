@@ -1,0 +1,14 @@
+<input type="file" id="archivo" accept=".pdf,.docx,.xlsx" />
+<iframe id="preview" width="400" height="300"></iframe>
+
+<script>
+document.getElementById('archivo').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    const preview = document.getElementById('preview');
+
+    if (file) {
+        const url = URL.createObjectURL(file);
+        preview.src = url;
+    }
+});
+</script>

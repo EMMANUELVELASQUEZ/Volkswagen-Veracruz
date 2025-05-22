@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Dashboard Financiero - Volkswagen</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      background-color: #000000; /* fondo negro */
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+    header {
+      margin: 40px 0 20px;
+      text-align: center;
+      text-shadow: 2px 2px 8px #00ffffbb;
+    }
+    header h1 {
+      font-weight: 900;
+      font-size: 2.8rem;
+      letter-spacing: 2px;
+      color: #00ffff;
+    }
+    .chart-container {
+      background: #111111cc;
+      border-radius: 20px;
+      padding: 25px 40px;
+      box-shadow: 0 10px 25px #00ffffaa;
+      width: 90%;
+      max-width: 1000px;
+      margin-bottom: 60px;
+      backdrop-filter: blur(15px);
+    }
+    canvas {
+      width: 100% !important;
+      height: 400px !important;
+    }
+    footer {
+      margin-bottom: 30px;
+      font-size: 0.9rem;
+      opacity: 0.7;
+      color: #00ffff;
+      text-shadow: 0 0 5px #00ffff88;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Dashboard Financiero - Volkswagen</h1>
+</header>
+
+<div class="chart-container">
+  <canvas id="finanzasChart"></canvas>
+</div>
+
+<footer>
+  &copy; 2025 Volkswagen — Visualización de datos
+</footer>
+
+<script>
+  const ctx = document.getElementById('finanzasChart').getContext('2d');
+
+  const data = {
+    labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo'],
+    datasets: [
+      {
+        label: 'Compras',
+        data: [20000, 25000, 22000, 28000, 30000],
+        backgroundColor: 'rgba(255, 99, 132, 0.8)', // rojo neón
+        borderColor: 'rgba(255, 99, 132, 1)',
+        borderWidth: 2,
+        borderRadius: 8,
+        hoverBackgroundColor: 'rgba(255, 99, 132, 1)',
+        hoverBorderColor: 'rgba(255, 99, 132, 1)'
+      },
+      {
+        label: 'Gastos',
+        data: [15000, 18000, 16000, 17000, 19000],
+        backgroundColor: 'rgba(54, 162, 235, 0.8)', // azul neón
+        borderColor: 'rgba(54, 162, 235, 1)',
+        borderWidth: 2,
+        borderRadius: 8,
+        hoverBackgroundColor: 'rgba(54, 162, 235, 1)',
+        hoverBorderColor: 'rgba(54, 162, 235, 1)'
+      },
+      {
+        label: 'Ganancias',
+        data: [5000, 7000, 6000, 11000, 11000],
+        backgroundColor: 'rgba(75, 192, 192, 0.8)', // cian neón
+        borderColor: 'rgba(75, 192, 192, 1)',
+        borderWidth: 2,
+        borderRadius: 8,
+        hoverBackgroundColor: 'rgba(75, 192, 192, 1)',
+        hoverBorderColor: 'rgba(75, 192, 192, 1)'
+      }
+    ]
+  };
+
+  const config = {
+    type: 'bar',
+    data: data,
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          labels: {
+            color: '#00ffff',
+            font: {
+              size: 16,
+              weight: 'bold'
+            }
+          }
+        },
+        tooltip: {
+          backgroundColor: '#222',
+          titleFont: { size: 16, weight: 'bold' },
+          bodyFont: { size: 14 },
+          padding: 10,
+          cornerRadius: 6,
+          displayColors: false
+        },
+        title: {
+          display: true,
+          text: 'Resumen Financiero Mensual Volkswagen',
+          color: '#00ffff',
+          font: {
+            size: 22,
+            weight: 'bold'
+          },
+          padding: {
+            top: 10,
+            bottom: 30
+          }
+        }
+      },
+      scales: {
+        x: {
+          ticks: {
+            color: '#00ffff',
+            font: { size: 14 }
+          },
+          grid: {
+            display: false
+          }
+        },
+        y: {
+          beginAtZero: true,
+          ticks: {
+            color: '#00ffff',
+            font: { size: 14 },
+            callback: function(value) {
+              return '$' + value.toLocaleString();
+            }
+          },
+          grid: {
+            color: 'rgba(0, 255, 255, 0.15)'
+          }
+        }
+      }
+    }
+  };
+
+  const finanzasChart = new Chart(ctx, config);
+</script>
+
+</body>
+</html>

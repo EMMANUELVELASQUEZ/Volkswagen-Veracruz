@@ -1,0 +1,25 @@
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #003399;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+main {
+    padding: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.grafica {
+    width: 90%;
+    max-width: 1000px;
+}
